@@ -8,37 +8,31 @@ import java.io.PrintWriter;
 
 public class ServerController {
 	private ObjectMapper objectMapper;
-	private String response;
 	private PrintWriter out;
 
-	public ServerController(PrintWriter out) {
-		this.objectMapper = new ObjectMapper();
-		this.response = null;
+	public ServerController(PrintWriter out, ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
 		this.out = out;
-	}
-
-	public String getResponse() {
-		return response;
-	}
-
-	public void setResponse(String response) {
-		this.response = response;
-	}
-
-	public PrintWriter getOut() {
-		return out;
 	}
 
 	public void getServer() {
 		ServerResponse serverResponse = new ServerResponse("Hello there! I'm running...");
 
+		String response = null;
+
 		try {
-			setResponse(objectMapper.writeValueAsString(serverResponse));
+			response = objectMapper.writeValueAsString(serverResponse);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 
-		RootController.sendResponse(out, getResponse());
+		RootController.sendResponse(out, response);
 
+	}
+
+	public void notFound() {
+		out.println("HTTP/1.1 404 Not Found");
+		out.flush();
+		out.close();
 	}
 }

@@ -10,58 +10,29 @@ import repository.UserRepository;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class MessageController {
 	private ObjectMapper objectMapper;
 	private PrintWriter out;
-	private String response;
 	private MessageRepository messageRepository;
 	private UserRepository userRepository;
 
-	public MessageController(PrintWriter out, MessageRepository messageRepository, UserRepository userRepository) {
-		this.objectMapper = new ObjectMapper();
+	public MessageController(PrintWriter out, MessageRepository messageRepository, UserRepository userRepository, ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
 		this.out = out;
-		this.response = null;
 		this.messageRepository = messageRepository;
 		this.userRepository = userRepository;
 	}
 
-	public ObjectMapper getObjectMapper() {
-		return objectMapper;
-	}
-
-	public PrintWriter getOut() {
-		return out;
-	}
-
-	public String getResponse() {
-		return response;
-	}
-
-	public void setResponse(String response) {
-		this.response = response;
-	}
-
-	public MessageRepository getMessageRepository() {
-		return messageRepository;
-	}
-
-	public UserRepository getUserRepository() {
-		return userRepository;
-	}
-
 	public void getAllMessages() {
-		ArrayList<User> users = getUserRepository().getUsers();
-		ArrayList<Message> messages = getMessageRepository().getMessages();
+		ArrayList<User> users = userRepository.getUsers();
+		ArrayList<Message> messages = messageRepository.getMessages();
+		MessagesResponse messagesResponse = new MessagesResponse(users, messages);
 
-		Map<Long, String> mapUsers = RootController.mapUsers(users);
-		Map<Long, String> mapMessages = RootController.mapMessages(messages);
-
-		MessagesResponse messagesResponse = new MessagesResponse(mapUsers, mapMessages);
+		String response = null;
 
 		try {
-			setResponse(getObjectMapper().writeValueAsString(messagesResponse));
+			response = objectMapper.writeValueAsString(messagesResponse);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -71,22 +42,21 @@ public class MessageController {
 	}
 
 	public void postMessage(long id, String msg) {
-		ArrayList<Message> messages = getMessageRepository().addMessage(id, msg);
-		ArrayList<User> users = getUserRepository().getUsers();
-
-		Map<Long, String> mapUsers = RootController.mapUsers(users);
-		Map<Long, String> mapMessages = RootController.mapMessages(messages);
-
-		MessagesResponse messagesResponse = new MessagesResponse(mapUsers, mapMessages);
+		ArrayList<User> users = userRepository.getUsers();
+		User user = userRepository.getUser(id);
+		ArrayList<Message> messages = messageRepository.addMessage(user, msg);
+		MessagesResponse messagesResponse = new MessagesResponse(users, messages);
 
 		String response = null;
+
 		try {
-			response = getObjectMapper().writeValueAsString(messagesResponse);
+			response = objectMapper.writeValueAsString(messagesResponse);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 
 		RootController.sendResponse(out, response);
+
 	}
 
 }

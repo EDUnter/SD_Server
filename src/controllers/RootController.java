@@ -1,22 +1,19 @@
 package controllers;
 
-import model.Message;
-import model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import repository.MessageRepository;
 import repository.UserRepository;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RootController {
+  private PrintWriter out;
+  private ObjectMapper objectMapper;
   private MessageController messageController;
   private ServerController serverController;
   private UserController userController;
-  private PrintWriter out;
 
   public RootController(Socket socket, UserRepository userRepository, MessageRepository messageRepository) {
     try {
@@ -26,9 +23,10 @@ public class RootController {
       System.exit(1);
     }
 
-    this.messageController = new MessageController(this.out, messageRepository, userRepository);
-    this.serverController = new ServerController(this.out);
-    this.userController = new UserController(this.out, userRepository);
+    this.objectMapper = new ObjectMapper();
+    this.messageController = new MessageController(out, messageRepository, userRepository, objectMapper);
+    this.serverController = new ServerController(out, objectMapper);
+    this.userController = new UserController(out, userRepository, objectMapper);
   }
 
   public MessageController getMessageController() {
@@ -51,27 +49,6 @@ public class RootController {
     out.println(response);
     out.flush();
     out.close();
-  }
-
-  public static Map<Long, String> mapUsers(ArrayList<User> users) {
-    Map<Long, String> map = new HashMap<>();
-
-    for(User user: users) {
-      map.put(user.getId(), user.getNickname());
-    }
-
-    return map;
-  }
-
-
-  public static Map<Long, String> mapMessages(ArrayList<Message> messages) {
-    Map<Long, String> map = new HashMap<>();
-
-    for(Message message: messages) {
-      map.put(message.getId(), message.getMessage());
-    }
-
-    return map;
   }
 
 }

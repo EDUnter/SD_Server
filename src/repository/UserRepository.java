@@ -16,27 +16,29 @@ public class UserRepository {
     return users;
   }
 
-  public static long getID() {
-    return ID;
-  }
+  public User getUser(long id) {
+    for(User user: users) {
+      if(user.getId() == id) {
+        return user;
+      }
+    }
 
-  public static void setID(long ID) {
-    UserRepository.ID = ID;
+    return null;
   }
 
   public User addUser(String nickname) {
 
     //Verififca se já existe um user com o mesmo "nickname"
-    for(User user: getUsers()) {
+    for(User user: users) {
       if(user.getNickname().equals(nickname)) {
         return user;
       }
     }
 
     //Adciciona um "User" com o "nickname" ao chat e atribui-lhe um id
-    User user = new User(nickname, getID());
-    getUsers().add(user);
-    setID(++ID);
+    User user = new User(nickname, ID);
+    users.add(user);
+    ID++;
 
     return user;
   }

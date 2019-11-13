@@ -1,27 +1,20 @@
 package model;
 
 public class Message {
-	private long id;
+	private User user;
 	private String message;
 
-	public Message(long id, String message) {
-		this.id = id;
+	public Message(User user, String message) {
+		this.user = user;
 		this.message = message;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+	public User getUser() {
+		return user;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
 }

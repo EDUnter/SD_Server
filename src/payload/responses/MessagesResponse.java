@@ -1,29 +1,32 @@
 package payload.responses;
 
-import java.util.Map;
+import model.Message;
+import model.User;
+
+import java.util.ArrayList;
 
 public class MessagesResponse {
-	private Map<Long, String> mapUsers;
-	private Map<Long, String> mapMessages;
+	private ArrayList<User> users;
+	private ArrayList<Message> messages;
 
-	public MessagesResponse(Map<Long, String> mapUsers, Map<Long, String> mapMessages) {
-		this.mapUsers = mapUsers;
-		this.mapMessages = mapMessages;
+	public MessagesResponse(ArrayList<User> users, ArrayList<Message> messages) {
+		this.users = users;
+		this.messages = messages;
 	}
 
-	public Map<Long, String> getMapUsers() {
-		return mapUsers;
+	public ArrayList<User> getUsers() {
+		return users;
 	}
 
-	public void setMapUsers(Map<Long, String> mapUsers) {
-		this.mapUsers = mapUsers;
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
 	}
 
-	public Map<Long, String> getMapMessages() {
-		return mapMessages;
+	public ArrayList<Message> getMessages() {
+		return messages;
 	}
 
-	public void setMapMessages(Map<Long, String> mapMessages) {
-		this.mapMessages = mapMessages;
+	public void setMessages(ArrayList<Message> messages) {
+		this.messages = messages;
 	}
 }

@@ -9,60 +9,45 @@ import repository.UserRepository;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class UserController {
-  private ObjectMapper objectMapper;
-  private UserRepository userRepository;
-  private PrintWriter out;
+	private ObjectMapper objectMapper;
+	private UserRepository userRepository;
+	private PrintWriter out;
 
-  public UserController(PrintWriter out, UserRepository userRepository) {
-    this.objectMapper = new ObjectMapper();
-    this.userRepository = userRepository;
-    this.out = out;
-  }
+	public UserController(PrintWriter out, UserRepository userRepository, ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
+		this.userRepository = userRepository;
+		this.out = out;
+	}
 
-  private ObjectMapper getObjectMapper() {
-    return objectMapper;
-  }
+	public void getAllUsers() {
+		ArrayList<User> users = userRepository.getUsers();
+		UsersResponse usersResponse = new UsersResponse(users);
 
-  private UserRepository getUserRepository() {
-    return userRepository;
-  }
+		String response = null;
+		try {
+			response = objectMapper.writeValueAsString(usersResponse);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 
-  public PrintWriter getOut() {
-    return out;
-  }
+		RootController.sendResponse(out, response);
+	}
 
-  public void getAllUsers() {
-    ArrayList<User> users = getUserRepository().getUsers();
-    Map<Long, String> map = RootController.mapUsers(users);
-    UsersResponse usersReponse = new UsersResponse(map);
+	public void postUser(String nickname) {
+		User user = userRepository.addUser(nickname);
+		RegisterResponse registerResponse = new RegisterResponse(user.getId());
 
-    String response = null;
-    try {
-      response = getObjectMapper().writeValueAsString(usersReponse);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
+		String response = null;
 
-    RootController.sendResponse(getOut(), response);
-  }
+		try {
+			response = objectMapper.writeValueAsString(registerResponse);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 
-  public void postUser(String nickname) {
-    User user = getUserRepository().addUser(nickname);
-    RegisterResponse registerResponse = new RegisterResponse(user.getId());
+		RootController.sendResponse(out, response);
 
-    String response = null;
-
-    try {
-      response = getObjectMapper().writeValueAsString(registerResponse);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
-    RootController.sendResponse(getOut(), response);
-
-  }
-
+	}
 }

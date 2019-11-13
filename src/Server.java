@@ -5,12 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-	static int DEFAULT_PORT=8081;
+	private static int DEFAULT_PORT=8081;
 	private static RootRepository ROOT_REPOSITORY;
-
-	public static void initRepositories() {
-		ROOT_REPOSITORY = new RootRepository();
-	}
 
 	public static void main(String[] args) {
 		int port = DEFAULT_PORT;
@@ -26,7 +22,7 @@ public class Server {
 		}
 
 		//Inicia os repositórios para gerir as request's
-		initRepositories();
+		ROOT_REPOSITORY = new RootRepository();
 
 		System.out.println("Servidor à espera de ligações no porto " + port);
 

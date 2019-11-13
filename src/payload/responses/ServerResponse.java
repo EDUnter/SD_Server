@@ -1,7 +1,6 @@
 package payload.responses;
 
 public class ServerResponse {
-
 	private String msg;
 
 	public ServerResponse(String msg) {
