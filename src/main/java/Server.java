@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-	private static int DEFAULT_PORT=5000;
+	private static int DEFAULT_PORT=8081;
 	private static RootRepository ROOT_REPOSITORY;
 
 	public static void main(String[] args) {

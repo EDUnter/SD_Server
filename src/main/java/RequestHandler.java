@@ -58,8 +58,13 @@ public class RequestHandler extends Thread {
 						rootController.getUserController().getAllUsers();
 						break;
 					case "POST /user":
-						for (int i = 0; i < 6; i++) {
-							in.readLine();
+						StringBuilder buffer = new StringBuilder();
+						String line;
+						for (int i = 0; i < 12; i++) {
+							if ((line = in.readLine()) != null) {
+								buffer.append(line + "\n");
+							}
+
 						}
 
 						//Lê o body da request

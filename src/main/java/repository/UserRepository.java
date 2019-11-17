@@ -27,14 +27,6 @@ public class UserRepository {
   }
 
   public User addUser(String nickname) {
-
-    //Verififca se já existe um user com o mesmo "nickname"
-    for(User user: users) {
-      if(user.getNickname().equals(nickname)) {
-        return user;
-      }
-    }
-
     //Adciciona um "User" com o "nickname" ao chat e atribui-lhe um id
     User user = new User(nickname, ID);
     users.add(user);
