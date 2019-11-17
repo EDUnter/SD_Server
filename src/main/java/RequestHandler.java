@@ -58,15 +58,11 @@ public class RequestHandler extends Thread {
 						rootController.getUserController().getAllUsers();
 						break;
 					case "POST /user":
-						StringBuilder buffer = new StringBuilder();
-						String line;
-						for (int i = 0; i < 12; i++) {
-							if ((line = in.readLine()) != null) {
-								buffer.append(line + "\n");
-							}
-
+						//StringBuilder buffer = new StringBuilder();
+						for (int i = 0; i < 13; i++) {
+							in.readLine();
 						}
-
+						//System.out.println(buffer.toString());
 						//Lê o body da request
 						String bodyUserFirstLine = in.readLine();
 						String bodyUserIdLine = in.readLine();
@@ -82,7 +78,7 @@ public class RequestHandler extends Thread {
 						rootController.getMessageController().getAllMessages();
 						break;
 					case "POST /message":
-						for (int i = 0; i < 6; i++) {
+						for (int i = 0; i < 13; i++) {
 							in.readLine();
 						}
 
