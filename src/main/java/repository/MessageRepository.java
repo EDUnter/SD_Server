@@ -16,7 +16,7 @@ public class MessageRepository {
 		return messages;
 	}
 
-	public ArrayList<Message> addMessage(User user, String msg) {
+	public synchronized ArrayList<Message> addMessage(User user, String msg) {
 		Message message = new Message(user, msg);
 		messages.add(message);
 

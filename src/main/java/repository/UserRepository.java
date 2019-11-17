@@ -26,7 +26,7 @@ public class UserRepository {
     return null;
   }
 
-  public User addUser(String nickname) {
+  public synchronized User addUser(String nickname) {
     //Adciciona um "User" com o "nickname" ao chat e atribui-lhe um id
     User user = new User(nickname, ID);
     users.add(user);
