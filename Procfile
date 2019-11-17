@@ -1,2 +1,2 @@
-release: chmod u+x target/dependency/aether-api-1.7.jar && target/dependency/aether-api-1.7.jar
+release: chmod u+x ./target/*
 web: java -Dserver.port=$PORT -cp target/classes;target/dependency/* Server
