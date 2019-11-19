@@ -1,1 +1,1 @@
-release: chmod u+x target/dependency/aether-api-1.7.jar
+export PORT=8080
