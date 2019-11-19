@@ -1,1 +1,1 @@
-web: java -Dserver.port=8080 -cp target/classes:target/dependency/* Server
+web: java -Dserver.port=8081 -cp target/classes:target/dependency/* Server
