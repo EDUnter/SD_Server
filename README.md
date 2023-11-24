@@ -21,4 +21,4 @@ The Java Chat Server is a chat API designed to seamless communication among user
 
 ## License
 
-This project is unde the MIT license. Open [LICENSE](LICENSE.md) archive to get more info
+This project is unde the MIT license. Open [LICENSE](LICENSE) archive to get more info
